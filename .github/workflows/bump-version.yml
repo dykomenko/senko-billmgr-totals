@@ -1,0 +1,45 @@
+name: Bump userscript version
+
+# Tampermonkey updates a script only when its @version grows. This workflow
+# raises the patch number on every push that touches the script without
+# changing the version itself, so "git push" is all it takes to ship an update.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - senko-billmgr-totals.user.js
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-version
+
+jobs:
+  bump:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run unit tests
+        run: node --test test/core.test.js
+
+      - name: Bump @version when the push did not
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: bash .github/scripts/bump-version.sh "$BEFORE"
+
+      - name: Commit the new version
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: bump userscript version [skip ci]"
+          git push
