@@ -321,6 +321,9 @@
   const cellOf = (tr, name) => textOf(tr.querySelector(`td[data-table-column-name="${name}"]`));
 
   // Lists of services have both a cost and an expiry column (VDS, dedicated, domains...).
+  // The script relies on BILLmanager's `data-table-column-name` attributes (cost, expiredate,
+  // item_status, domain, pricelist) and on <isp-table>/<isp-balance>; if the panel disappears
+  // after a BILLmanager update, these selectors are the first thing to check.
   function readRows(table) {
     if (!table.querySelector('td[data-table-column-name="expiredate"]')) return [];
     const rows = [];
