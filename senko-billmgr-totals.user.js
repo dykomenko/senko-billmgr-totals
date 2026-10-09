@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Senko BILLmanager: итоги по услугам
 // @namespace    https://github.com/dykomenko/senko-billmgr-totals
-// @version      1.0.1
-// @description  Под списком услуг в my.senko.digital показывает суммарную стоимость в месяц и сумму, которую нужно доплатить, чтобы всё работало ещё месяц.
+// @version      1.1.0
+// @description  Под списком услуг в кабинете BILLmanager (my.senko.digital, my.waicore.com) показывает суммарную стоимость в месяц и сумму, которую нужно доплатить, чтобы всё работало ещё месяц.
 // @author       dykomenko
 // @license      MIT
 // @match        https://my.senko.digital/billmgr*
+// @match        https://my.waicore.com/billmgr*
 // @run-at       document-idle
 // @noframes
 // @grant        none
